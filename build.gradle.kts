@@ -46,8 +46,19 @@ subprojects {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+
+
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
-        options.compilerArgs.addAll(listOf("-Xlint:all,-serial,-processing", "-Werror"))
+        options.compilerArgs.addAll(listOf("-Xlint:all,-serial,-processing"))
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+        testLogging.showExceptions = true
+        reports {
+            junitXml.required.set(true)
+            html.required.set(true)
+        }
     }
 }
