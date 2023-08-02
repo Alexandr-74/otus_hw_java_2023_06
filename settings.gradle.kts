@@ -1,6 +1,7 @@
 rootProject.name = "otus_java_2023_06"
 include("hw01-gradle")
 include("L04-generics")
+include("hw06-annotations")
 
 pluginManagement {
     val dependencyManagement: String by settings
@@ -14,3 +15,6 @@ pluginManagement {
         id("com.github.johnrengelman.shadow") version johnrengelmanShadow
     }
 }
+include("hw06-annotations:src:main:untitled")
+findProject(":hw06-annotations:src:main:untitled")?.name = "untitled"
+include("hw06-annotations")
