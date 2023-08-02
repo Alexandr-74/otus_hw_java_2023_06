@@ -61,13 +61,13 @@ public class TestRunner {
         }
     }
 
-    private void execute(List<List<Method>> threes, Class testClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    private void execute(List<List<Method>> threes, Class<?> testClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         int errors = 0;
         int success = 0;
 
         for (List<Method> three : threes) {
             //создаю объект тестового класса
-            Constructor constructor = testClass.getConstructor();
+            Constructor<?> constructor = testClass.getConstructor();
             Object testObject = constructor.newInstance();
             //выполняю методы
             for (Method meth : three) {
