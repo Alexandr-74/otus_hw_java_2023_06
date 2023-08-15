@@ -2,6 +2,7 @@ rootProject.name = "otus_java_2023_06"
 include("hw01-gradle")
 include("L04-generics")
 include("hw06-annotations")
+include("L08-gc")
 include("hw10-aop")
 
 pluginManagement {
@@ -25,7 +26,3 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
-include("hw06-annotations:src:main:untitled")
-findProject(":hw06-annotations:src:main:untitled")?.name = "untitled"
-include("hw06-annotations")
-include("hw10-aop")
