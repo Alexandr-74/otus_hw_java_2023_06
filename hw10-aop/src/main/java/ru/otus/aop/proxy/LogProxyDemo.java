@@ -2,7 +2,7 @@ package ru.otus.aop.proxy;
 
 public class LogProxyDemo {
     public static void main(String[] args) {
-        TestLoginInterface testLogin = (TestLoginInterface) Ioc.createMyClass(TestLogin.class);
+        TestLoginInterface testLogin = (TestLoginInterface) Ioc.createMyClass(TestLogin.class, TestLoginInterface.class);
 
         testLogin.calculation(6);
         testLogin.calculation(6, 2);
