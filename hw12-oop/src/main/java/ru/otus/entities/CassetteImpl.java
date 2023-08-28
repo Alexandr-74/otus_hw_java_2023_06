@@ -1,19 +1,19 @@
-package ru.otus.dto;
+package ru.otus.entities;
 
 import ru.otus.exceptions.NotEnoughBanknotesException;
-import ru.otus.interfaces.Banknote;
 import ru.otus.interfaces.Cassette;
 
 import java.util.ArrayDeque;
+import java.util.List;
 
 public class CassetteImpl implements Cassette {
-    private final String nominal;
-    private ArrayDeque<Banknote> banknotes = new ArrayDeque<>();
-    CassetteImpl(String nominal) {
+    private final Nominal nominal;
+    private final ArrayDeque<Banknote> banknotes = new ArrayDeque<>();
+    CassetteImpl(Nominal nominal) {
         this.nominal = nominal;
     }
 
-    public String getNominal() {
+    public Nominal getNominal() {
         return nominal;
     }
 
@@ -26,6 +26,10 @@ public class CassetteImpl implements Cassette {
             throw new NotEnoughBanknotesException(nominal);
         }
         return this.banknotes.poll();
+    }
+
+    public List<Banknote> checkAllBanknotes() {
+        return banknotes.clone().stream().toList();
     }
 
 }
