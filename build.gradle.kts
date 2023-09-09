@@ -33,6 +33,7 @@ allprojects {
     val guava: String by project
     val jmh: String by project
     val asm: String by project
+    val glassfishJson: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
@@ -46,6 +47,7 @@ allprojects {
             dependency("org.openjdk.jmh:jmh-core:$jmh")
             dependency("org.openjdk.jmh:jmh-generator-annprocess:$jmh")
             dependency("org.ow2.asm:asm-commons:$asm")
+            dependency("org.glassfish:jakarta.json:$glassfishJson")
         }
     }
 
@@ -70,6 +72,7 @@ allprojects {
     }
 }
 
+
 subprojects {
     plugins.apply(JavaPlugin::class.java)
     extensions.configure<JavaPluginExtension> {
@@ -84,12 +87,43 @@ subprojects {
         options.compilerArgs.addAll(listOf("-Xlint:all,-serial,-processing"))
     }
 
+    apply<name.remal.gradle_plugins.sonarlint.SonarLintPlugin>()
+    apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
+    configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+        java {
+            googleJavaFormat("1.16.0").aosp()
+        }
+    }
+
+    plugins.apply(fr.brouillard.oss.gradle.plugins.JGitverPlugin::class.java)
+    extensions.configure<fr.brouillard.oss.gradle.plugins.JGitverPluginExtension> {
+        strategy("PATTERN")
+        nonQualifierBranches("main,master")
+        tagVersionPattern("\${v}\${<meta.DIRTY_TEXT}")
+        versionPattern(
+            "\${v}\${<meta.COMMIT_DISTANCE}\${<meta.GIT_SHA1_8}" +
+                    "\${<meta.QUALIFIED_BRANCH_NAME}\${<meta.DIRTY_TEXT}-SNAPSHOT"
+        )
+    }
+
     tasks.withType<Test> {
         useJUnitPlatform()
         testLogging.showExceptions = true
         reports {
             junitXml.required.set(true)
             html.required.set(true)
+        }
+    }
+}
+
+tasks {
+    val managedVersions by registering {
+        doLast {
+            project.extensions.getByType<DependencyManagementExtension>()
+                .managedVersions
+                .toSortedMap()
+                .map { "${it.key}:${it.value}" }
+                .forEach(::println)
         }
     }
 }
