@@ -292,12 +292,6 @@ public class Message {
             return this;
         }
 
-        private ObjectForMessage copyField13() {
-            var copy = new ObjectForMessage();
-            copy.setData(field13 != null ? new ArrayList<>(field13.getData()) : new ArrayList<>());
-            return copy;
-        }
-
         public Message build() {
             return new Message(
                     id,
@@ -314,6 +308,12 @@ public class Message {
                     field11,
                     field12,
                     copyField13());
+        }
+
+        private ObjectForMessage copyField13() {
+            var copy = new ObjectForMessage();
+            copy.setData(field13 != null ? new ArrayList<>(field13.getData()) : new ArrayList<>());
+            return copy;
         }
     }
 }
