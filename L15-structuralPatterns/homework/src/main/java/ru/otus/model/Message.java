@@ -283,7 +283,7 @@ public class Message {
         }
 
         public Builder field12(String field12) {
-            this.field10 = field10;
+            this.field12 = field12;
             return this;
         }
 
@@ -294,26 +294,17 @@ public class Message {
 
         public Message build() {
             return new Message(
-                    id,
-                    field1,
-                    field2,
-                    field3,
-                    field4,
-                    field5,
-                    field6,
-                    field7,
-                    field8,
-                    field9,
-                    field10,
-                    field11,
-                    field12,
-                    copyField13());
+                    id, field1, field2, field3, field4, field5, field6, field7, field8, field9,
+                    field10, field11, field12, field13);
         }
 
-        private ObjectForMessage copyField13() {
-            var copy = new ObjectForMessage();
-            copy.setData(field13 != null ? new ArrayList<>(field13.getData()) : new ArrayList<>());
-            return copy;
+        public Message copy() {
+            var newField13 = new ObjectForMessage();
+            newField13.setData(field13 != null ? new ArrayList<>(field13.getData()) : new ArrayList<>());
+            return new Message(
+                    id, field1, field2, field3, field4, field5, field6, field7, field8, field9,
+                    field10, field11, field12, newField13);
         }
+
     }
 }

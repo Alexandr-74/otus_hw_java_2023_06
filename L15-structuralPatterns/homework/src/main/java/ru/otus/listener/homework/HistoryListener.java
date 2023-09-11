@@ -12,7 +12,7 @@ public class HistoryListener implements Listener, HistoryReader {
 
     @Override
     public void onUpdated(Message msg) {
-        msgSet.add(msg.toBuilder().build());
+        msgSet.add(msg.toBuilder().copy());
     }
 
     @Override
