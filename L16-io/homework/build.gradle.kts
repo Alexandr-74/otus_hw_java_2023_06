@@ -5,7 +5,7 @@ dependencies {
     implementation ("javax.json:javax.json-api")
     implementation ("org.glassfish:jakarta.json")
     implementation ("com.google.protobuf:protobuf-java-util")
-    implementation("com.google.code.gson:gson:2.9.1")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     testImplementation ("org.junit.jupiter:junit-jupiter-api")
     testImplementation ("org.junit.jupiter:junit-jupiter-engine")
