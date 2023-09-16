@@ -5,11 +5,7 @@ dependencies {
     implementation ("javax.json:javax.json-api")
     implementation ("org.glassfish:jakarta.json")
     implementation ("com.google.protobuf:protobuf-java-util")
-    compileOnly ("org.projectlombok:lombok:1.18.28")
-    annotationProcessor ("org.projectlombok:lombok:1.18.28")
-
-    testCompileOnly ("org.projectlombok:lombok:1.18.28")
-    testAnnotationProcessor ("org.projectlombok:lombok:1.18.28")
+    implementation("com.google.code.gson:gson:2.9.1")
 
     testImplementation ("org.junit.jupiter:junit-jupiter-api")
     testImplementation ("org.junit.jupiter:junit-jupiter-engine")
@@ -18,4 +14,3 @@ dependencies {
     testImplementation ("org.mockito:mockito-core")
     testImplementation ("org.mockito:mockito-junit-jupiter")
 }
-
