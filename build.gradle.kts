@@ -36,6 +36,16 @@ allprojects {
     val jmh: String by project
     val asm: String by project
     val glassfishJson: String by project
+    val ehcache: String by project
+
+    val mongodb: String by project
+    val mongodbReactive: String by project
+    val cassandra: String by project
+    val neo4j: String by project
+    val jedis: String by project
+
+    val jetty: String by project
+    val freemarker: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
@@ -50,6 +60,24 @@ allprojects {
             dependency("org.openjdk.jmh:jmh-generator-annprocess:$jmh")
             dependency("org.ow2.asm:asm-commons:$asm")
             dependency("org.glassfish:jakarta.json:$glassfishJson")
+            dependency("org.ehcache:ehcache:$ehcache")
+
+            dependency("com.datastax.oss:java-driver-core:$cassandra")
+            dependency("org.mongodb:mongodb-driver-core:$mongodb")
+            dependency("org.mongodb:mongodb-driver-sync:$mongodb")
+            dependency("org.mongodb:bson:$mongodb")
+            dependency("org.mongodb:mongodb-driver-reactivestreams:${mongodbReactive}")
+            dependency("org.neo4j.driver:neo4j-java-driver:$neo4j")
+            dependency("redis.clients:jedis:$jedis")
+
+            dependency("org.eclipse.jetty:jetty-servlet:$jetty")
+            dependency("org.eclipse.jetty:jetty-server:$jetty")
+            dependency("org.eclipse.jetty:jetty-webapp:$jetty")
+            dependency("org.eclipse.jetty:jetty-security:$jetty")
+            dependency("org.eclipse.jetty:jetty-http:$jetty")
+            dependency("org.eclipse.jetty:jetty-io:$jetty")
+            dependency("org.eclipse.jetty:jetty-util:$jetty")
+            dependency("org.freemarker:freemarker:$freemarker")
         }
     }
 
@@ -90,7 +118,7 @@ subprojects {
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         java {
-            googleJavaFormat("1.16.0").aosp()
+            palantirJavaFormat("2.38.0")
         }
     }
 
