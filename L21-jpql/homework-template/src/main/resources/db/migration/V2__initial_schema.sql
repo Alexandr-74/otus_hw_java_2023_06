@@ -11,6 +11,7 @@ create table client
 create table address
 (
     id serial not null primary key,
+    client_id bigint,
     street varchar(50)
 );
 

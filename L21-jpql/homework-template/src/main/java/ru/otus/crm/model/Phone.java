@@ -8,7 +8,6 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Table(name = "phone")
@@ -22,7 +21,7 @@ public class Phone {
     @Column(name="number")
     private String number;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Client client;
 
 

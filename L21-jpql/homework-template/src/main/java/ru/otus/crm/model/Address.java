@@ -19,6 +19,9 @@ public class Address {
     @Column(name="street")
     private String street;
 
+    @OneToOne
+    private Client client;
+
     public Address(Long id, String street) {
         this.id = null;
         this.street = street;
