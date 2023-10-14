@@ -2,7 +2,6 @@ package ru.otus.crm.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GeneratorType;
 
 @Entity
 @Getter
@@ -19,8 +18,6 @@ public class Address {
     @Column(name="street")
     private String street;
 
-    @OneToOne
-    private Client client;
 
     public Address(Long id, String street) {
         this.id = null;

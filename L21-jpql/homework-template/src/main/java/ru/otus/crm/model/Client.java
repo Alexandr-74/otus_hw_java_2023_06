@@ -25,10 +25,9 @@ public class Client implements Cloneable {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(optional=false, mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToOne(optional=false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Address address;
 
-    @Fetch(value=FetchMode.JOIN)
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", cascade = CascadeType.ALL)
     private List<Phone> phones;
 
@@ -46,9 +45,6 @@ public class Client implements Cloneable {
         this.id = id;
         this.name = name;
         this.address = address;
-        if (this.address.getClient() == null) {
-            this.address.setClient(this);
-        }
         this.phones = phones;
         this.phones.forEach(ph->{
             if (ph.getClient() == null) {
