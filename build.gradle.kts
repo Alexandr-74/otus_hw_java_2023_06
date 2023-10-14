@@ -20,6 +20,8 @@ idea {
         isDownloadSources = true
     }
 }
+
+
 allprojects {
     group = "ru.otus"
 
@@ -34,6 +36,7 @@ allprojects {
     val jmh: String by project
     val asm: String by project
     val glassfishJson: String by project
+    val ehcache: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
@@ -48,6 +51,8 @@ allprojects {
             dependency("org.openjdk.jmh:jmh-generator-annprocess:$jmh")
             dependency("org.ow2.asm:asm-commons:$asm")
             dependency("org.glassfish:jakarta.json:$glassfishJson")
+            dependency("org.ehcache:ehcache:$ehcache")
+
         }
     }
 
@@ -72,15 +77,12 @@ allprojects {
     }
 }
 
-
 subprojects {
     plugins.apply(JavaPlugin::class.java)
     extensions.configure<JavaPluginExtension> {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-
-
 
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
@@ -91,7 +93,7 @@ subprojects {
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         java {
-            googleJavaFormat("1.16.0").aosp()
+            palantirJavaFormat("2.38.0")
         }
     }
 
