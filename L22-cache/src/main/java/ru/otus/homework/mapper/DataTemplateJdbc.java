@@ -60,8 +60,10 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
             int i = 0;
             for (Field field : obj.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
-                field.set(obj, rs.getObject(fields.get(i).getName(), fields.get(i).getType()));
-                i+=1;
+                if (rs.next()) {
+                    field.set(obj, rs.getObject(fields.get(i).getName(), fields.get(i).getType()));
+                    i += 1;
+                }
             }
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException |
                  SQLException e) {

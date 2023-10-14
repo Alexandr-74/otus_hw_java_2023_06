@@ -3,6 +3,7 @@ package ru.otus.homework;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.cachehw.MyCache;
 import ru.otus.homework.core.repository.executor.DbExecutorImpl;
 import ru.otus.homework.core.sessionmanager.TransactionRunnerJdbc;
 import ru.otus.homework.datasource.DriverManagerDataSource;
@@ -28,15 +29,17 @@ public class Main {
         var transactionRunner = new TransactionRunnerJdbc(dataSource);
         var dbExecutor = new DbExecutorImpl();
 
+        var start = System.currentTimeMillis();
+
         // Работа с клиентом
         EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
         EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
         System.out.println(entitySQLMetaDataClient.getInsertSql());
-        var dataTemplateClient = new DataTemplateJdbc<Client>(
+        var dataTemplateClient = new DataTemplateJdbc<>(
                 dbExecutor, entitySQLMetaDataClient, Client.class); // реализация DataTemplate, универсальная
 
         // Код дальше должен остаться
-        var dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
+        var dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient, new MyCache<>());
         dbServiceClient.saveClient(new Client("dbServiceFirst"));
 
         var clientSecond = dbServiceClient.saveClient(new Client("dbServiceSecond"));
@@ -49,9 +52,9 @@ public class Main {
 
         EntityClassMetaData<Manager> entityClassMetaDataManager = new EntityClassMetaDataImpl<>(Manager.class);
         EntitySQLMetaData entitySQLMetaDataManager = new EntitySQLMetaDataImpl(entityClassMetaDataManager);
-        var dataTemplateManager = new DataTemplateJdbc<Manager>(dbExecutor, entitySQLMetaDataManager, Manager.class);
+        var dataTemplateManager = new DataTemplateJdbc<>(dbExecutor, entitySQLMetaDataManager, Manager.class);
 
-        var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager);
+        var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager, new MyCache<>());
         dbServiceManager.saveManager(new Manager("ManagerFirst"));
 
         var managerSecond = dbServiceManager.saveManager(new Manager("ManagerSecond"));
@@ -59,6 +62,9 @@ public class Main {
                 .getManager(managerSecond.getNo())
                 .orElseThrow(() -> new RuntimeException("Manager not found, id:" + managerSecond.getNo()));
         log.info("managerSecondSelected:{}", managerSecondSelected);
+
+        var finish = System. currentTimeMillis();
+        log.info("Отработал за {}", finish-start);
     }
 
     private static void flywayMigrations(DataSource dataSource) {

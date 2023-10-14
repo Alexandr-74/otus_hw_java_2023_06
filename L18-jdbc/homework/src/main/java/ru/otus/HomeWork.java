@@ -28,6 +28,8 @@ public class HomeWork {
         var transactionRunner = new TransactionRunnerJdbc(dataSource);
         var dbExecutor = new DbExecutorImpl();
 
+        var start = System.currentTimeMillis();
+
         // Работа с клиентом
         EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
         EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
@@ -59,6 +61,10 @@ public class HomeWork {
                 .getManager(managerSecond.getNo())
                 .orElseThrow(() -> new RuntimeException("Manager not found, id:" + managerSecond.getNo()));
         log.info("managerSecondSelected:{}", managerSecondSelected);
+
+
+        var finish = System. currentTimeMillis();
+        log.info("Отработал за {}", finish-start);
     }
 
     private static void flywayMigrations(DataSource dataSource) {
