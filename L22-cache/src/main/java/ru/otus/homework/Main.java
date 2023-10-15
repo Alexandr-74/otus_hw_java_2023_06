@@ -1,5 +1,6 @@
 package ru.otus.homework;
 
+import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +13,6 @@ import ru.otus.homework.model.Client;
 import ru.otus.homework.model.Manager;
 import ru.otus.homework.service.DbServiceClientImpl;
 import ru.otus.homework.service.DbServiceManagerImpl;
-
-import javax.sql.DataSource;
 
 public class Main {
     private static final String URL = "jdbc:postgresql://localhost:5430/demoDB";
@@ -63,8 +62,8 @@ public class Main {
                 .orElseThrow(() -> new RuntimeException("Manager not found, id:" + managerSecond.getNo()));
         log.info("managerSecondSelected:{}", managerSecondSelected);
 
-        var finish = System. currentTimeMillis();
-        log.info("Отработал за {}", finish-start);
+        var finish = System.currentTimeMillis();
+        log.info("Отработал за {}", finish - start);
     }
 
     private static void flywayMigrations(DataSource dataSource) {

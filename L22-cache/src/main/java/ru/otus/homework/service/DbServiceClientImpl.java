@@ -1,14 +1,13 @@
 package ru.otus.homework.service;
 
+import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.cachehw.MyCache;
 import ru.otus.homework.core.repository.DataTemplate;
 import ru.otus.homework.core.sessionmanager.TransactionRunner;
 import ru.otus.homework.model.Client;
-
-import java.util.List;
-import java.util.Optional;
 
 public class DbServiceClientImpl implements DBServiceClient {
     private static final Logger log = LoggerFactory.getLogger(DbServiceClientImpl.class);
@@ -17,7 +16,8 @@ public class DbServiceClientImpl implements DBServiceClient {
     private final TransactionRunner transactionRunner;
     private final MyCache<Long, Client> myCache;
 
-    public DbServiceClientImpl(TransactionRunner transactionRunner, DataTemplate<Client> dataTemplate, MyCache<Long, Client> myCache) {
+    public DbServiceClientImpl(
+            TransactionRunner transactionRunner, DataTemplate<Client> dataTemplate, MyCache<Long, Client> myCache) {
         this.transactionRunner = transactionRunner;
         this.dataTemplate = dataTemplate;
         this.myCache = myCache;
@@ -43,12 +43,13 @@ public class DbServiceClientImpl implements DBServiceClient {
     public Optional<Client> getClient(long id) {
         Client client = myCache.get(id);
 
-        return client!=null? Optional.of(client) : transactionRunner.doInTransaction(connection -> {
-            var clientOptional = dataTemplate.findById(connection, id);
-            log.info("client: {}", clientOptional);
-            return clientOptional;
-        });
-
+        return client != null
+                ? Optional.of(client)
+                : transactionRunner.doInTransaction(connection -> {
+                    var clientOptional = dataTemplate.findById(connection, id);
+                    log.info("client: {}", clientOptional);
+                    return clientOptional;
+                });
     }
 
     @Override

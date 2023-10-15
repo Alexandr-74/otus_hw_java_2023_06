@@ -1,9 +1,8 @@
 package ru.otus.homework.service;
 
-import ru.otus.homework.model.Manager;
-
 import java.util.List;
 import java.util.Optional;
+import ru.otus.homework.model.Manager;
 
 public interface DBServiceManager {
 

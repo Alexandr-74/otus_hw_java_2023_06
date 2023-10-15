@@ -1,28 +1,28 @@
 package ru.otus.homework.mapper;
 
-import ru.otus.homework.model.Id;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import ru.otus.homework.model.Id;
 
 public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     Field idField;
     List<Field> otherFields = new ArrayList<>();
     String className;
     Constructor<T> constructor;
+
     public EntityClassMetaDataImpl(Class<T> clazz) {
         className = clazz.getSimpleName();
         try {
-        constructor = clazz.getConstructor();
+            constructor = clazz.getConstructor();
         } catch (NoSuchMethodException ex) {
             throw new IllegalStateException();
         }
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             if (field.isAnnotationPresent(Id.class)) {
-                if (idField!=null) {
+                if (idField != null) {
                     throw new IllegalStateException();
                 } else {
                     idField = field;
@@ -51,7 +51,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     @Override
     public List<Field> getAllFields() {
         var res = new ArrayList<>(otherFields);
-        res.add(0,idField);
+        res.add(0, idField);
         return res;
     }
 
