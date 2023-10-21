@@ -49,11 +49,7 @@ public class Client implements Cloneable {
         this.name = name;
         this.address = address;
         this.phones = phones;
-        this.phones.forEach(ph->{
-            if (ph.getClient() == null) {
-                ph.setClient(this);
-            }
-        });
+        this.phones = phones.stream().map(phone -> new Phone(phone.getId(), phone.getNumber(), this)).toList();
     }
 
     public Client(Long id, String name, Address address, List<Phone> phones, String login, String password) {

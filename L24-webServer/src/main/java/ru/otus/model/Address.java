@@ -29,9 +29,4 @@ public class Address {
         this.id = null;
         this.street = street;
     }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
