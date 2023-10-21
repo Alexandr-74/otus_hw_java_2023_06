@@ -20,6 +20,8 @@ idea {
         isDownloadSources = true
     }
 }
+
+
 allprojects {
     group = "ru.otus"
 
@@ -35,6 +37,9 @@ allprojects {
     val asm: String by project
     val glassfishJson: String by project
 
+    val jetty: String by project
+    val freemarker: String by project
+
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
         dependencies {
@@ -48,6 +53,14 @@ allprojects {
             dependency("org.openjdk.jmh:jmh-generator-annprocess:$jmh")
             dependency("org.ow2.asm:asm-commons:$asm")
             dependency("org.glassfish:jakarta.json:$glassfishJson")
+            dependency("org.eclipse.jetty:jetty-servlet:$jetty")
+            dependency("org.eclipse.jetty:jetty-server:$jetty")
+            dependency("org.eclipse.jetty:jetty-webapp:$jetty")
+            dependency("org.eclipse.jetty:jetty-security:$jetty")
+            dependency("org.eclipse.jetty:jetty-http:$jetty")
+            dependency("org.eclipse.jetty:jetty-io:$jetty")
+            dependency("org.eclipse.jetty:jetty-util:$jetty")
+            dependency("org.freemarker:freemarker:$freemarker")
         }
     }
 
@@ -72,15 +85,12 @@ allprojects {
     }
 }
 
-
 subprojects {
     plugins.apply(JavaPlugin::class.java)
     extensions.configure<JavaPluginExtension> {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-
-
 
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
@@ -91,7 +101,7 @@ subprojects {
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         java {
-            googleJavaFormat("1.16.0").aosp()
+            palantirJavaFormat("2.38.0")
         }
     }
 
