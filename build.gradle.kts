@@ -20,6 +20,8 @@ idea {
         isDownloadSources = true
     }
 }
+
+
 allprojects {
     group = "ru.otus"
 
@@ -72,15 +74,12 @@ allprojects {
     }
 }
 
-
 subprojects {
     plugins.apply(JavaPlugin::class.java)
     extensions.configure<JavaPluginExtension> {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-
-
 
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
@@ -91,7 +90,7 @@ subprojects {
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         java {
-            googleJavaFormat("1.16.0").aosp()
+            palantirJavaFormat("2.38.0")
         }
     }
 
