@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.WeakHashMap;
 
+
 public class MyCache<K, V> implements HwCache<K, V> {
     // Надо реализовать эти методы
     private final WeakHashMap<K, V> cache = new WeakHashMap<>();
@@ -13,19 +14,37 @@ public class MyCache<K, V> implements HwCache<K, V> {
 
     @Override
     public void put(K key, V value) {
-        listeners.forEach(l -> Objects.requireNonNull(l.get()).notify(key, value, "Put"));
-        cache.put(key, value);
+        try {
+            listeners.forEach(l -> Objects.requireNonNull(l.get()).notify(key, value, "Put"));
+        } catch (Exception e) {
+            System.out.println("Ошибка при оповещении слушателя: " + e.getMessage());
+        }
+            cache.put(key, value);
     }
 
     @Override
     public void remove(K key) {
-        listeners.forEach(l -> Objects.requireNonNull(l.get()).notify(key, cache.get(key), "Remove"));
+        try {
+            listeners.forEach(l -> {
+                try {
+                    Objects.requireNonNull(l.get()).notify(key, cache.get(key), "Remove");
+                } catch (NullPointerException ex) {
+                    listeners.remove(l);
+                }
+            });
+        }  catch (Exception e) {
+            System.out.println("Ошибка при оповещении слушателя: " + e.getMessage());
+        }
         cache.remove(key);
     }
 
     @Override
     public V get(K key) {
-        listeners.forEach(l -> Objects.requireNonNull(l.get()).notify(key, cache.get(key), "Find"));
+        try {
+            listeners.forEach(l -> Objects.requireNonNull(l.get()).notify(key, cache.get(key), "Find"));
+        } catch (Exception e) {
+            System.out.println("Ошибка при оповещении слушателя: " + e.getMessage());
+        }
         return cache.get(key);
     }
 
