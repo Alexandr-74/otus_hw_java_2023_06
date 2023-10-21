@@ -45,12 +45,7 @@ public class Client implements Cloneable {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.phones = phones;
-        this.phones.forEach(ph->{
-            if (ph.getClient() == null) {
-                ph.setClient(this);
-            }
-        });
+        this.phones = phones.stream().map(phone -> new Phone(phone.getId(), phone.getNumber(), this)).toList();
     }
 
 
