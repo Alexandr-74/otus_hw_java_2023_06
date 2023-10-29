@@ -10,13 +10,15 @@ include("L15-structuralPatterns:homework")
 
 include("L16-io:demo")
 include("L16-io:homework")
+
 include("L17-nio-logging")
+include("L21-jpql:class-demo")
+include("L21-jpql:homework-template")
 
 include("L18-jdbc:demo")
 include("L18-jdbc:homework")
-include("L21-jpql:class-demo")
-include("L21-jpql:homework-template")
 include("L22-cache")
+include ("L24-webServer")
 
 pluginManagement {
     val jgitver: String by settings

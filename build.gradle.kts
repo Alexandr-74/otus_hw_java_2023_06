@@ -38,6 +38,9 @@ allprojects {
     val glassfishJson: String by project
     val ehcache: String by project
 
+    val jetty: String by project
+    val freemarker: String by project
+
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
         dependencies {
@@ -51,8 +54,15 @@ allprojects {
             dependency("org.openjdk.jmh:jmh-generator-annprocess:$jmh")
             dependency("org.ow2.asm:asm-commons:$asm")
             dependency("org.glassfish:jakarta.json:$glassfishJson")
+            dependency("org.eclipse.jetty:jetty-servlet:$jetty")
+            dependency("org.eclipse.jetty:jetty-server:$jetty")
+            dependency("org.eclipse.jetty:jetty-webapp:$jetty")
+            dependency("org.eclipse.jetty:jetty-security:$jetty")
+            dependency("org.eclipse.jetty:jetty-http:$jetty")
+            dependency("org.eclipse.jetty:jetty-io:$jetty")
+            dependency("org.eclipse.jetty:jetty-util:$jetty")
+            dependency("org.freemarker:freemarker:$freemarker")
             dependency("org.ehcache:ehcache:$ehcache")
-
         }
     }
 
