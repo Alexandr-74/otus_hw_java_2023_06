@@ -36,6 +36,7 @@ allprojects {
     val jmh: String by project
     val asm: String by project
     val glassfishJson: String by project
+    val ehcache: String by project
 
     val jetty: String by project
     val freemarker: String by project
@@ -61,6 +62,7 @@ allprojects {
             dependency("org.eclipse.jetty:jetty-io:$jetty")
             dependency("org.eclipse.jetty:jetty-util:$jetty")
             dependency("org.freemarker:freemarker:$freemarker")
+            dependency("org.ehcache:ehcache:$ehcache")
         }
     }
 
